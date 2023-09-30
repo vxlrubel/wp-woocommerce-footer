@@ -10,7 +10,9 @@ Author URI: https://www.linkedin.com/in/vxlrubel
 
 // Plugin code goes here
 
-defined('ABSPATH') OR exit('directly access denied');    
+
+defined('ABSPATH') OR exit('directly access denied');
+
 
 class Woocommerce_Footer{
     // create singletone instance
@@ -22,19 +24,23 @@ class Woocommerce_Footer{
      */
     public function __construct(){
 
-        add_action( 'wp_head', [ $this, 'custom_style'] );
-
+        add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
     }
 
-    public function custom_style(){
-        ?>
-        <style>
-            .custom_style{
-                display: inline;
-            }
-        </style>
+
+    /**
+     * enqueue script for Woocommerce Footer Design
+     *
+     * @return void
+     */
+    public function enqueue_scripts(){
         
-        <?php
+        // enqueue style for footer style
+        wp_enqueue_style( 'wcf-style', plugin_dir_url(__FILE__) . 'assets/css/wcf-style.css' );
+
+        // enqueue script for footer style
+        wp_enqueue_script( 'wcf-script', plugin_dir_url(__FILE__) . 'assets/js/wcf-custom.js', ['jquery'], '1.0', true );
+
     }
 
     /**
